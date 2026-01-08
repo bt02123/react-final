@@ -3,22 +3,25 @@ import logo from "../Assets/cinevault-logo.png";
 import banner from "../Assets/movies-banner.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const Home = () => {
 //   const [filterMovies, setFilterMovies] = useState([]);
+const { text } = useParams();
   const [movies, setMovies] = useState([]);
-  const [searchText, setSearchText] = useState([]);
+  const [searchText, setSearchText] = useState(text);
   async function fetchMovies(searchText) {
     const { data } = await axios.get(
       `https://www.omdbapi.com/?s=${searchText}&page=1&apikey=f8e01cdb`
     );
-    setMovies(data);
+    setMovies(data.Search);
     console.log(movies);
   }
 
   useEffect(() => {
-    fetchMovies();
+    fetchMovies(searchText);
   }, []);
+  console.log(searchText)
 
   return (
     <div>
@@ -84,13 +87,13 @@ const Home = () => {
                   <div class="movie__poster">
                     <img
                       class="movie__img"
-                      src={m.poster}
+                      src={m.Poster}
                       alt="Poster not found"
                     />
                   </div>
                   <div class="movie__info">
-                    <div class="movie__title">{m.title}</div>
-                    <div class="movie__year">{m.year}</div>
+                    <div class="movie__title">{m.Title}</div>
+                    <div class="movie__year">{m.Year}</div>
                   </div>
                 </div>
               ))}
