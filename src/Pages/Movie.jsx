@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Movie.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate, useParams } from "react-router-dom";
@@ -20,7 +20,9 @@ const Movie = () => {
         console.log(info.data)
     }
 
-    fetchInfo();
+    useEffect(() =>{
+        fetchInfo();
+    }, []);
 
   return (
     <>
