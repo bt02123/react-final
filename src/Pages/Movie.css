@@ -1,0 +1,70 @@
+.movie-container {
+    padding: 20px;
+    height: 100vh;
+    display: flex;
+}
+.movie-full {
+    background-color: #aabfee;
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+    display: flex;
+}
+
+.movie-full__poster {
+    width: 55%;
+    height: 100%;
+}
+
+.movie-full__img {
+    width: 95%;
+    height: 95%;
+    border-radius: 20px;
+    border: 4px solid #0044ff;
+    margin: 20px;
+}
+
+.movie-info__container {
+    width: 75%;
+    padding-right: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.movie-full__info {
+    height: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 24px;
+    margin-left: 16px;
+    line-height: 1.5;
+}
+
+.movie-full__title {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+a {
+    cursor: not-allowed;
+    color: blue;
+    text-decoration: underline;
+}
+
+
+.close-tag{
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding-right: 12px;
+}
+
+.close-container :hover {
+    color: red;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
+}
