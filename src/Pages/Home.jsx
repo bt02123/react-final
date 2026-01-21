@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 
 const Home = () => {
   // const [sortMovies, setSortMovies] = useState([data]);
+  const { id } = useParams();
   const { text } = useParams();
   const [movies, setMovies] = useState([]);
   const [searchText, setSearchText] = useState(text || "");
@@ -21,9 +22,9 @@ const Home = () => {
     console.log(movies);
     console.log(data)
   }
-  const goToMovie = (e) => {
-    // navigate(":id");
-  console.log(e.currentTarget);
+  const goToMovie = (id) => {
+    navigate(`/${id}`);
+  console.log(`${id}`);
   };
 
   useEffect(() => {
@@ -68,8 +69,9 @@ const Home = () => {
                   id="filter"
                   // onChange=
                   className="filter__movies"
+                  defaultValue=""
                 >
-                  <option value selected disabled>
+                  <option value="" disabled>
                     Sort Movies
                   </option>
                   <option value="OLDEST_TO_NEWEST">
@@ -85,8 +87,8 @@ const Home = () => {
               <div className="movies">
                 <i className="fa-solid fa-spinner movies__loading--spinner"></i>
                 {movies.map((m) => (
-                  <div className="movie"
-                   onClick={goToMovie}>
+                  <div className="movie" key={m.imdbID}
+                   onClick={() => goToMovie(m.imdbID)}>
                     <div className="movie__poster">
                       <img
                         className="movie__img"

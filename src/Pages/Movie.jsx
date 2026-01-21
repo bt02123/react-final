@@ -1,55 +1,68 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Movie.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const Movie = () => {
+    const { id } = useParams();
     const navigate = useNavigate()
+    const [movie, setMovie] = useState([]);
     const goHome = () => {
         navigate("/")
     }
+
+    async function fetchInfo() {
+        const info = await axios.get(
+            `https://www.omdbapi.com/?apikey=f8e01cdb&i=${id}`
+        )
+        setMovie(info.data)
+        console.log(info.data)
+    }
+
+    fetchInfo();
+
   return (
     <>
-      <div className="movie-container">
+    {movie.map((m) => (
+        <div className="movie-container">
         <div className="movie-full">
           <div className="movie-full__poster">
             <img
               className="movie-full__img"
-              src="https://m.media-amazon.com/images/M/MV5BMTUxNTk5MTE0OF5BMl5BanBnXkFtZTcwMjA2NzY3NA@@._V1_SX300.jpg"
+              src={m.Poster}
               alt="Poster not found"
-            />
+              />
           </div>
           <div className="movie-info__container">
             <div className="movie-full__info">
-              <div className="movie-full__title">Fast Five</div>
+              <div className="movie-full__title">{m.Title}</div>
               <div className="movie-full__year">
-                <b>Released: </b>2011
+                <b>Released: </b>{m.Year}
               </div>
               <div className="movie-full__rating">
-                <b>Rating: </b>PG-13
+                <b>Rated: </b>{m.Rated}
               </div>
               <div className="movie-full__runtime">
-                <b>Length: </b>107 mins
+                <b>Length: </b>{m.Runtime}
               </div>
               <div className="movie-full__actors">
-                <b>Starring: </b>Vin Diesel, Paul Walker, Michelle Rodriguez
+                <b>Starring: </b>{m.Actors}
               </div>
               <div className="movie-full__plot">
-                <b>Plot: </b>Brian O'Conner, back working for the FBI in Los
-                Angeles, teams up with Dominic Toretto to bring down a heroin
-                importer by infiltrating his operation.{" "}
+                <b>Plot: </b>{m.Plot}
               </div>
               <div className="movie-full__director">
-                <b>Directed by: </b>Justin Lin
+                <b>Directed by: </b>{m.Director}
               </div>
               <div className="movie-full__plot">
-                <b>Written by: </b>Chris Morgan, Gary Scott Thompson
+                <b>Written by: </b>{m.Writer}
               </div>
               <div className="movie-full__genre">
-                <b>Genre: </b>Action, Thriller
+                <b>Genre: </b>{m.Genre}
               </div>
               <div className="movie-full__critics">
-                <b>Rotten Tomatoes: </b>28%
+                <b>Rotten Tomatoes: </b>{m.Ratings}
               </div>
               <div className="streaming">
                 <b>Stream Here: </b>
@@ -64,6 +77,7 @@ const Movie = () => {
           </div>
         </div>
       </div>
+    ))}
     </>
   );
 };
