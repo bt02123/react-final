@@ -7,7 +7,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 const Home = () => {
-  // const [sortMovies, setSortMovies] = useState([data]);
   const { id } = useParams();
   const { text } = useParams();
   const [movies, setMovies] = useState([]);
@@ -23,33 +22,28 @@ const Home = () => {
       `https://www.omdbapi.com/?s=${searchText}&page=1&apikey=f8e01cdb`
     );
     setMovies(data.Search);
-    console.log(movies);
-    console.log(data)
+   
   }
   const goToMovie = (id) => {
     navigate(`/${id}`);
-  console.log(`${id}`);
+
   };
 
 const sortMovies = (value) => {
-  const sortedMovies = () => {
+  let sortedMovies;
   if (value === 'OLDEST_TO_NEWEST') {
-        [...movies].sort((a, b) => a.Year - b.Year);
-        setMovies(sortedMovies);
+        sortedMovies = [...movies].sort((a, b) => a.Year - b.Year);
     }
     else if (value === 'NEWEST_TO_OLDEST') {
-        [...movies].sort((a, b) => b.Year - a.Year);
-        setMovies(sortedMovies);
-    }
+        sortedMovies = [...movies].sort((a, b) => b.Year - a.Year);
+     }
     else if (value === 'A_TO_Z') {
-        [...movies].sort((a, b) => a.Title.localeCompare(b.Title));
-        setMovies(sortedMovies);
-    }
+        sortedMovies = [...movies].sort((a, b) => a.Title.localeCompare(b.Title));
+    }    
     else if (value === 'Z_TO_A') {
-        [...movies].sort((a, b) => b.Title.localeCompare(a.Title));
-        setMovies(sortedMovies);
-    }}
+        sortedMovies = [...movies].sort((a, b) => b.Title.localeCompare(a.Title));
     }
+  setMovies(sortedMovies);}
 
   useEffect(() => {
     fetchMovies(searchText ? searchText : 
