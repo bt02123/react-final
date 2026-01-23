@@ -15,6 +15,10 @@ const Home = () => {
   const navigate = useNavigate();
   
   async function fetchMovies(searchText) {
+    // if (!searchText) {
+    //     alert("Please enter a movie title");
+    //     return;
+    // }
     const { data } = await axios.get(
       `https://www.omdbapi.com/?s=${searchText}&page=1&apikey=f8e01cdb`
     );
@@ -27,10 +31,31 @@ const Home = () => {
   console.log(`${id}`);
   };
 
+const sortMovies = (value) => {
+  const sortedMovies = () => {
+  if (value === 'OLDEST_TO_NEWEST') {
+        [...movies].sort((a, b) => a.Year - b.Year);
+        setMovies(sortedMovies);
+    }
+    else if (value === 'NEWEST_TO_OLDEST') {
+        [...movies].sort((a, b) => b.Year - a.Year);
+        setMovies(sortedMovies);
+    }
+    else if (value === 'A_TO_Z') {
+        [...movies].sort((a, b) => a.Title.localeCompare(b.Title));
+        setMovies(sortedMovies);
+    }
+    else if (value === 'Z_TO_A') {
+        [...movies].sort((a, b) => b.Title.localeCompare(a.Title));
+        setMovies(sortedMovies);
+    }}
+    }
+
   useEffect(() => {
-    fetchMovies("Christmas");
-  }, []);
-  console.log(searchText);
+    fetchMovies(searchText ? searchText : 
+      "How to train your dragon");
+  },[]);
+  console.log(movies);
 
   return (
     <>
@@ -67,7 +92,7 @@ const Home = () => {
                 <h2 className="results__title">Search results:</h2>
                 <select
                   id="filter"
-                  // onChange=
+                  onChange= {(e) => sortMovies(e.target.value)}
                   className="filter__movies"
                   defaultValue=""
                 >
