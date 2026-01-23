@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import logo from "../Assets/cinevault-logo.png";
-import banner from "../Assets/movies-banner.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
@@ -11,44 +9,52 @@ const Home = () => {
   const { text } = useParams();
   const [movies, setMovies] = useState([]);
   const [searchText, setSearchText] = useState(text || "");
+  const [loading, setLoading] = useState();
   const navigate = useNavigate();
-  
+
   async function fetchMovies(searchText) {
-    // if (!searchText) {
-    //     alert("Please enter a movie title");
-    //     return;
-    // }
+    setLoading(true);
+    if (!searchText) {
+      alert("Please enter a movie title");
+      return;
+    }
     const { data } = await axios.get(
       `https://www.omdbapi.com/?s=${searchText}&page=1&apikey=f8e01cdb`
     );
     setMovies(data.Search);
-   
+    setLoading(false);
   }
   const goToMovie = (id) => {
     navigate(`/${id}`);
-
   };
 
-const sortMovies = (value) => {
-  let sortedMovies;
-  if (value === 'OLDEST_TO_NEWEST') {
-        sortedMovies = [...movies].sort((a, b) => a.Year - b.Year);
+  const sortMovies = (value) => {
+    let sortedMovies;
+    if (value === "OLDEST_TO_NEWEST") {
+      sortedMovies = [...movies].sort((a, b) => a.Year - b.Year);
+    } else if (value === "NEWEST_TO_OLDEST") {
+      sortedMovies = [...movies].sort((a, b) => b.Year - a.Year);
+    } else if (value === "A_TO_Z") {
+      sortedMovies = [...movies].sort((a, b) => a.Title.localeCompare(b.Title));
+    } else if (value === "Z_TO_A") {
+      sortedMovies = [...movies].sort((a, b) => b.Title.localeCompare(a.Title));
     }
-    else if (value === 'NEWEST_TO_OLDEST') {
-        sortedMovies = [...movies].sort((a, b) => b.Year - a.Year);
-     }
-    else if (value === 'A_TO_Z') {
-        sortedMovies = [...movies].sort((a, b) => a.Title.localeCompare(b.Title));
-    }    
-    else if (value === 'Z_TO_A') {
-        sortedMovies = [...movies].sort((a, b) => b.Title.localeCompare(a.Title));
-    }
-  setMovies(sortedMovies);}
+    setMovies(sortedMovies);
+  };
 
   useEffect(() => {
-    fetchMovies(searchText ? searchText : 
-      "How to train your dragon");
-  },[]);
+    const trimmedSearch = searchText.trim();
+
+    if (!trimmedSearch) {
+      return;
+    }
+
+    const timeoutId = setTimeout(() => {
+      fetchMovies(trimmedSearch);
+    }, 1500);
+
+    return () => clearTimeout(timeoutId);
+  }, [searchText]);
   console.log(movies);
 
   return (
@@ -63,7 +69,7 @@ const sortMovies = (value) => {
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               type="text"
-              placeholder="Search by Title, Year, or Keyword"
+              placeholder="Start typing to search by Title, Year, or Keyword..."
               onKeyPress={(event) =>
                 event.key === "Enter" && fetchMovies(searchText)
               }
@@ -86,7 +92,7 @@ const sortMovies = (value) => {
                 <h2 className="results__title">Search results:</h2>
                 <select
                   id="filter"
-                  onChange= {(e) => sortMovies(e.target.value)}
+                  onChange={(e) => sortMovies(e.target.value)}
                   className="filter__movies"
                   defaultValue=""
                 >
@@ -103,25 +109,32 @@ const sortMovies = (value) => {
                   <option value="Z_TO_A">Alphabetically: Z to A</option>
                 </select>
               </div>
-              <div className="movies">
-                <i className="fa-solid fa-spinner movies__loading--spinner"></i>
-                {movies.map((m) => (
-                  <div className="movie" key={m.imdbID}
-                   onClick={() => goToMovie(m.imdbID)}>
-                    <div className="movie__poster">
-                      <img
-                        className="movie__img"
-                        src={m.Poster}
-                        alt="Poster not found"
-                      />
+              {loading ? (
+                <FontAwesomeIcon icon="fa-solid fa-spinner " 
+                className="movies__loading--spinner" />
+              ) : (
+                <div className="movies">
+                  {movies.map((m) => (
+                    <div
+                      className="movie"
+                      key={m.imdbID}
+                      onClick={() => goToMovie(m.imdbID)}
+                    >
+                      <div className="movie__poster">
+                        <img
+                          className="movie__img"
+                          src={m.Poster}
+                          alt="Poster not found"
+                        />
+                      </div>
+                      <div className="movie__info">
+                        <div className="movie__title">{m.Title}</div>
+                        <div className="movie__year">{m.Year}</div>
+                      </div>
                     </div>
-                    <div className="movie__info">
-                      <div className="movie__title">{m.Title}</div>
-                      <div className="movie__year">{m.Year}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

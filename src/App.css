@@ -238,24 +238,14 @@ input {
     margin-top: 8px;
 }
 
-.movies__loading {
+.fa-spinner {
+   
     display: flex;
     align-items: center;
     justify-content: center;
     padding-top: 60px;
     font-size: 60px;
-    color:rgb(224, 0, 0)
-}
-
-.movies__loading--spinner {
-    display: none;
-}
-
-.movies__loading .movies__loading--spinner {
-    display: block;
-}
-
-.fa-spinner {
+    color:rgb(224, 0, 0);
     animation: rotate 900ms infinite linear;
 }
 
