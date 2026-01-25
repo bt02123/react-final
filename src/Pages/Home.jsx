@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 const Home = () => {
-  const { id } = useParams();
+
   const { text } = useParams();
   const [movies, setMovies] = useState([]);
   const [searchText, setSearchText] = useState(text || "");

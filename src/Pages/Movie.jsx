@@ -69,7 +69,7 @@ const Movie = () => {
                 </div>
                 <div className="streaming">
                   <b>Stream Here: </b>
-                  <a>Netflix</a>, <a>Hulu</a>, <a>YouTube</a>, <a>HBO</a>
+                  <a href='#'>Netflix</a>, <a href='#'>Hulu</a>, <a href='#'>YouTube</a>, <a href='#'>HBO</a>
                 </div>
               </div>
             </div>
