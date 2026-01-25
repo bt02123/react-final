@@ -68,3 +68,12 @@ a {
     cursor: pointer;
     font-weight: bold;
 }
+
+button {
+    cursor: not-allowed;
+    color: blue;
+    text-decoration: underline;
+    background-color: #aabfee;
+    border: none;
+    font-size: 24px;
+}
