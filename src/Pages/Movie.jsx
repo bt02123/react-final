@@ -22,7 +22,7 @@ const Movie = () => {
 
     useEffect(() =>{
         fetchInfo();
-    }, [id, fetchInfo]);
+    }, [id]);
 
     const rotten = movie?.Ratings?.find((r) => r.Source === "Rotten Tomatoes")?.Value || "N/A"
    return (
@@ -69,7 +69,7 @@ const Movie = () => {
                 </div>
                 <div className="streaming">
                   <b>Stream Here: </b>
-                  <button>Netflix</button>, <button>Hulu</button>, <button>YouTube</button>, <button>HBO</button>
+                  <button className='stream-btn'>Netflix</button>, <button className='stream-btn'>Hulu</button>, <button className='stream-btn'>YouTube</button>, <button className='stream-btn'>HBO</button>
                 </div>
               </div>
             </div>

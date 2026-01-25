@@ -61,7 +61,7 @@ body {
 .contact:hover {
     transform: scale(1.05);
     box-shadow: 0px 0px 15px 5px rgba(219, 52, 52, 0.75);
-    cursor: pointer;
+    cursor: not-allowed;
 }
 
 .contact:active {

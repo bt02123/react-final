@@ -69,7 +69,7 @@ a {
     font-weight: bold;
 }
 
-button {
+.stream-btn {
     cursor: not-allowed;
     color: blue;
     text-decoration: underline;
